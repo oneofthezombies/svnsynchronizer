@@ -54,7 +54,7 @@ class Task:
         os.chdir(self.path)
         LOGGER.info(f'current dir:[{self.path}]')
 
-    def unlock(self):
+    def try_unlock(self):
         try:
             do_command('svn cleanup', capture_output=True)
         except CalledProcessError:
@@ -116,7 +116,7 @@ class Task:
         if do:
             do_command(f'svn switch {self.url}')
 
-    def cleanup(self):
+    def cleanup_if(self):
         if self.clean:
             do_command('svn cleanup --remove-unversioned --remove-ignored')
             do_command('svn revert --recursive --remove-added .')
@@ -127,11 +127,11 @@ class Task:
 
 def do(task: Task):
     task.change_directory()
-    task.unlock()
+    task.try_unlock()
     task.checkout_if_not()
     task.relocate_if_not()
     task.switch_if_not()
-    task.cleanup()
+    task.cleanup_if()
     task.update()
 
 
