@@ -12,12 +12,12 @@ PATTERN_HOST = re.compile('^(svn|https*)://(?P<host>.+?)/.*$')
 
 
 def __create_logger():
-    logger = logging.getLogger(__name__)
+    logger = logging.getLogger('svnsynchronizer')
     logger.setLevel(logging.DEBUG)
     console_handler = logging.StreamHandler()
     console_handler.setLevel(logging.DEBUG)
 
-    formatter = logging.Formatter('[%(asctime)s][%(name)s][%(thread)d][%(levelname)s][%(message)s]')
+    formatter = logging.Formatter('[%(asctime)s][%(name)s][TID:%(thread)d][%(levelname)s][%(message)s]')
 
     console_handler.setFormatter(formatter)
 
